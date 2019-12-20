@@ -120,7 +120,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>mooneshkachroo/${project.name}</repository>
+					<repository>guptavinodkumar/${project.name}</repository>
 					<tag>${project.version}</tag>
 					<skipDockerInfo>true</skipDockerInfo>
 				</configuration>

@@ -19,11 +19,11 @@ Run com.in28minutes.microservices.currencyconversionservice.CurrencyConversionSe
 
 #### Basic
 ```
-docker container run --publish 8000:8000 mooneshkachroo/aws-currency-exchange-service-h2:0.0.1-SNAPSHOT
+docker container run --publish 8000:8000 guptavinodkumar/aws-currency-exchange-service-h2:0.0.1-SNAPSHOT
 ```
 #### Custom Network
 ```
-docker run --publish 8000:8000 --network currency-network --name=currency-exchange-service mooneshkachroo/aws-currency-exchange-service-h2:0.0.1-SNAPSHOT
+docker run --publish 8000:8000 --network currency-network --name=currency-exchange-service guptavinodkumar/aws-currency-exchange-service-h2:0.0.1-SNAPSHOT
 ```
 
 Test API 
