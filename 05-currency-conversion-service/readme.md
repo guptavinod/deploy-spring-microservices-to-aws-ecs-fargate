@@ -15,10 +15,12 @@ Run com.in28minutes.microservices.currencyconversionservice.CurrencyConversionSe
 
 - mvn package
 
-### Running Containers
+### Running and communicating both the Containers locally
 
 ```
-docker run --publish 8100:8100 --network currency-network --env CURRENCY_EXCHANGE_URI=http://currency-exchange-service:8000 mooneshkachroo/aws-currency-conversion-service:0.0.1-SNAPSHOT
+docker run --publish 8000:8000 --name currency-exchange-service --network My-bridge guptavinodkumar/aws-currency-exchange-service-h2:0.0.1-SNAPSHOT
+
+docker run --publish 8100:8100 --network My-bridge --env CURRENCY_EXCHANGE_URI=http://currency-exchange-service:8000 guptavinodkumar/aws-currency-conversion-service:0.0.1-SNAPSHOT
 ```
 
 #### Test API 

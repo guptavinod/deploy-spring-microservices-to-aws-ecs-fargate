@@ -121,7 +121,7 @@ Fetching table and column names from `exchange-db` for auto-completion... Press 
 ### Creating Containers
 
 - mvn package
-- docker run --publish 8000:8000 --network MY_BRIDGE --name currency-exchange-microservice in28min/aws-currency-exchange-service-mysql:0.0.1-SNAPSHOT
+- docker run --publish 8000:8000 --name currency-exchange-microservice guptavinodkumar/aws-currency-exchange-service-mysql:0.0.1-SNAPSHOT
 
 Test API 
 - http://localhost:8000/api/currency-exchange-microservice/currency-exchange/from/USD/to/INR
@@ -141,7 +141,15 @@ SSM URN - arn:aws:ssm:us-east-1:<account-id>:parameter/<name>
 - /dev/currency-exchange-service/RDS_PORT     - 3306
 - /dev/currency-exchange-service/RDS_USERNAME - exchange_db_user
 
+##
+RDS_HOSTNAME:
+RDS_PORT:3306
+RDS_DB_NAME:exchange_db
+RDS_USERNAME:exchange_db_user
+RDS_PASSWORD:dummyexchange
 
+RDS_Master_password: admin12345
+exchange_db_user
 
 ## Resources
 
@@ -167,4 +175,19 @@ create table exchange_value
 	currency_to varchar(255), 
 	primary key (id)
 )
+```
+## To connect Local MYSQL CONTAINER WITH CURRENCY EXCHANGE SERVICE LOCAL CONTAINER 
+
+1. RUN MYSQL with --network MY_BRIDGE
+docker run --detach --network MY_BRIDGE --env MYSQL_ROOT_PASSWORD=dummypassword --env MYSQL_USER=exchange-db-user --env MYSQL_PASSWORD=dummyexchange --env MYSQL_DATABASE=exchange-db --name mysql --publish 3306:3306 mysql:5.7
+
+2. RUN Cuurency Exchange Service  with --network MY_BRIDGE & --link <name of the mysql container>
+docker run --publish 8000:8000 --network MY_BRIDGE --name currency-exchange-microservice --link mysql guptavinodkumar/aws-currency-exchange-service-mysql:0.0.1-SNAPSHOT
+
+3.  Change db connection URL in the application. properties file [ to now point to the container] :  
+jdbc:mysql://<<name of the mysql container>:3306/mydatabase
+
+spring.datasource.url=jdbc:mysql://mysql:3306/mydatabase
+
+
 ```
