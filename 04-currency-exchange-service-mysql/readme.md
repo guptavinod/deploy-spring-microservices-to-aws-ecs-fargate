@@ -179,15 +179,18 @@ create table exchange_value
 ## To connect Local MYSQL CONTAINER WITH CURRENCY EXCHANGE SERVICE LOCAL CONTAINER 
 
 1. RUN MYSQL with --network MY_BRIDGE
-docker run --detach --network MY_BRIDGE --env MYSQL_ROOT_PASSWORD=dummypassword --env MYSQL_USER=exchange-db-user --env MYSQL_PASSWORD=dummyexchange --env MYSQL_DATABASE=exchange-db --name mysql --publish 3306:3306 mysql:5.7
+
+docker run --detach --network MY_BRIDGE --env MYSQL_ROOT_PASSWORD=dummypassword --env MYSQL_USER=exchange-db-user --env MYSQL_PASSWORD=dummyexchange --env MYSQL_DATABASE=exchange-db --name mySprintSql --publish 3306:3306 mysql:5.7
 
 2. RUN Cuurency Exchange Service  with --network MY_BRIDGE & --link <name of the mysql container>
-docker run --publish 8000:8000 --network MY_BRIDGE --name currency-exchange-microservice --link mysql guptavinodkumar/aws-currency-exchange-service-mysql:0.0.1-SNAPSHOT
+
+docker run --publish 8000:8000 --network MY_BRIDGE --name currency-exchange-microservice --link mySprintSql guptavinodkumar/aws-currency-exchange-service-mysql:0.0.1-SNAPSHOT
 
 3.  Change db connection URL in the application. properties file [ to now point to the container] :  
+
 jdbc:mysql://<<name of the mysql container>:3306/mydatabase
 
-spring.datasource.url=jdbc:mysql://mysql:3306/mydatabase
-
+i.e.
+spring.datasource.url=jdbc:mysql://mySprintSql:3306/exchange-db
 
 ```
